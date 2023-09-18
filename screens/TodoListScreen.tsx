@@ -19,7 +19,7 @@ export default function TodoListScreen() {
 function Task(props: { task: Task, index: number, onCompleted: (index: number) => void }) {
   return (
     <View>
-      💡<Text style={{textDecorationLine: props.task.completed ? "line-through" : "none"}}>{props.task.title}</Text>
+      <Text style={{textDecorationLine: props.task.completed ? "line-through" : "none"}}>💡{props.task.title}</Text>
       <Button onPress={() => (props.onCompleted(props.index))} title={props.task.completed ? "Undone" : "Done"}/>
     </View>
   );
