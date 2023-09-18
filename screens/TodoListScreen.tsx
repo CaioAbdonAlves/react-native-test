@@ -54,7 +54,7 @@ function Todo() {
 
   return (
     <View>
-      <div>
+      <View>
         {tasks.map((task, index) => (
           <Task
             onCompleted={completeTask}
@@ -63,7 +63,7 @@ function Todo() {
             key={index}
           />
         ))}
-      </div>
+      </View>
       <View>
         <CreateTask addTask={addTask}/>
       </View>
