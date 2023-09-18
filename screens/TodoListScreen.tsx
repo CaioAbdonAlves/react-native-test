@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {useState} from 'react';
-import {Button, StyleSheet, TextInput} from 'react-native';
+import {Button, Dimensions, StyleSheet, TextInput, TouchableOpacity} from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import {Text, View} from '../components/Themed';
 
 export type Task = {
@@ -18,9 +19,11 @@ export default function TodoListScreen() {
 
 function Task(props: { task: Task, index: number, onCompleted: (index: number) => void }) {
   return (
-    <View>
-      <Text style={{textDecorationLine: props.task.completed ? "line-through" : "none"}}>💡{props.task.title}</Text>
-      <Button onPress={() => (props.onCompleted(props.index))} title={props.task.completed ? "Undone" : "Done"}/>
+    <View style={styles.todoContainer}>
+      <Text style={{textDecorationLine: props.task.completed ? "line-through" : "none", fontSize: 16, color: '#000'}}>💡{props.task.title}</Text>
+      <TouchableOpacity onPress={() => (props.onCompleted(props.index))} style={styles.todoButton}> 
+        <Text>{props.task.completed ? "Undone" : "Done"}</Text>
+      </TouchableOpacity> 
     </View>
   );
 }
@@ -54,7 +57,7 @@ function Todo() {
 
   return (
     <View>
-      <View>
+      <ScrollView style={styles.listContainer}>
         {tasks.map((task, index) => (
           <Task
             onCompleted={completeTask}
@@ -63,7 +66,7 @@ function Todo() {
             key={index}
           />
         ))}
-      </View>
+      </ScrollView>
       <View>
         <CreateTask addTask={addTask}/>
       </View>
@@ -93,11 +96,13 @@ function CreateTask(props: { addTask: (value: string) => void }) {
   );
 }
 
+const screenWidth = Dimensions.get('window').width;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    width: screenWidth * 0.9,
+    alignSelf: 'center'
   },
   title: {
     fontSize: 20,
@@ -108,4 +113,23 @@ const styles = StyleSheet.create({
     height: 1,
     width: '80%',
   },
+  listContainer: {
+    height: '90%'
+  },
+  todoContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 8,
+    backgroundColor: '#c4bebd',
+    padding: 8,
+    borderRadius: 50,
+    alignItems: 'center'
+  },
+  todoButton: {
+    borderRadius: 50,
+    backgroundColor: '#4288cb',
+    padding: 8,
+    width: 70,
+    alignItems: 'center'
+  }
 });
